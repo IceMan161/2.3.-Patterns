@@ -3,7 +3,6 @@ package ru.netology.delivery.test;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 import ru.netology.delivery.data.DataGenerator;
@@ -28,23 +27,18 @@ public class CardDeliveryTest {
 
     }
 
-    @BeforeEach
-    void setup() {
-        open("http://localhost:9999");
-    }
-
     @Test
     void shouldSendForm() {
 
         String planningDate = generateDate(9);
 
-        Configuration.holdBrowserOpen = true;
         Configuration.browserSize = "800x600";
         Configuration.headless = true;
 
         RegistrationInfo info = DataGenerator
                 .Registration.generateInfo("ru");
 
+        open("http://localhost:9999");
         $x("//input[@type='text']").val(info.getCity());
         $("[data-test-id='date'] input").sendKeys(Keys.chord(SHIFT, HOME), BACK_SPACE);
         $("[data-test-id='date'] input").setValue(planningDate);
@@ -59,18 +53,18 @@ public class CardDeliveryTest {
     }
 
     @Test
-    void shouldSendForm2() {
+    void shouldSendFormRescheduling() {
 
         String planningDate = generateDate(5);
         String planingDateSecond = generateDate(10);
 
-        Configuration.holdBrowserOpen = true;
         Configuration.browserSize = "800x600";
         Configuration.headless = true;
 
         RegistrationInfo info = DataGenerator
                 .Registration.generateInfo("ru");
 
+        open("http://localhost:9999");
         $x("//input[@type='text']").val(info.getCity());
         $("[data-test-id='date'] input").sendKeys(Keys.chord(SHIFT, HOME), BACK_SPACE);
         $("[data-test-id='date'] input").setValue(planningDate);
@@ -86,11 +80,9 @@ public class CardDeliveryTest {
         $(withText("Запланировать")).click();
 
         $x("//*[contains(text(),'Необходимо подтверждение')]").should(visible, Duration.ofSeconds(5));
-//        $(".notification__content").shouldHave(Condition.text("У вас уже запланирована встреча на другую дату. Перепланировать?" + planingDateSecond), Duration.ofSeconds(5));
         $(withText("Перепланировать")).click();
 
         $x("//*[contains(text(),'Успешно!')]").should(appear, Duration.ofSeconds(5));
-//        $(".notification__content").shouldHave(Condition.text("Встреча успешно запланирована на " + planingDateSecond), Duration.ofSeconds(5));
 
     }
 }

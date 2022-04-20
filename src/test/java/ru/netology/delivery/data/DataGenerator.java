@@ -12,7 +12,6 @@ public class DataGenerator {
         public static RegistrationInfo generateInfo(String locale) {
             Faker faker = new Faker(new Locale(locale));
             return new RegistrationInfo(faker.address().cityName(),
-                    //                   LocalDate.now().plusDays(7),
                     faker.name().fullName(),
                     faker.phoneNumber().phoneNumber());
         }
