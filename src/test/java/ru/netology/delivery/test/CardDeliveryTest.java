@@ -33,7 +33,7 @@ public class CardDeliveryTest {
         String planningDate = generateDate(9);
 
         Configuration.browserSize = "800x600";
- //       Configuration.headless = true;
+        Configuration.headless = true;
 
         RegistrationInfo info = DataGenerator
                 .Registration.generateInfo("ru");
@@ -59,7 +59,7 @@ public class CardDeliveryTest {
         String planingDateSecond = generateDate(10);
 
         Configuration.browserSize = "800x600";
- //       Configuration.headless = true;
+        Configuration.headless = true;
 
         RegistrationInfo info = DataGenerator
                 .Registration.generateInfo("ru");
