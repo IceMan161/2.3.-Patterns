@@ -33,7 +33,7 @@ public class CardDeliveryTest {
         String planningDate = generateDate(9);
 
         Configuration.browserSize = "800x600";
-        Configuration.headless = true;
+ //       Configuration.headless = true;
 
         RegistrationInfo info = DataGenerator
                 .Registration.generateInfo("ru");
@@ -59,7 +59,7 @@ public class CardDeliveryTest {
         String planingDateSecond = generateDate(10);
 
         Configuration.browserSize = "800x600";
-        Configuration.headless = true;
+ //       Configuration.headless = true;
 
         RegistrationInfo info = DataGenerator
                 .Registration.generateInfo("ru");
@@ -74,6 +74,7 @@ public class CardDeliveryTest {
         $(withText("Запланировать")).click();
 
         $x("//*[contains(text(),'Успешно!')]").should(appear, Duration.ofSeconds(5));
+        $(".notification__content").shouldHave(Condition.text("Встреча успешно запланирована на " + planningDate), Duration.ofSeconds(5));
 
         $("[data-test-id='date'] input").sendKeys(Keys.chord(SHIFT, HOME), BACK_SPACE);
         $("[data-test-id='date'] input").setValue(planingDateSecond);
@@ -83,6 +84,7 @@ public class CardDeliveryTest {
         $(withText("Перепланировать")).click();
 
         $x("//*[contains(text(),'Успешно!')]").should(appear, Duration.ofSeconds(5));
+        $(".notification__content").shouldHave(Condition.text("Встреча успешно запланирована на " + planingDateSecond), Duration.ofSeconds(5));
 
     }
 }
