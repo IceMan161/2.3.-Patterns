@@ -9,8 +9,6 @@ import ru.netology.delivery.data.DataGenerator;
 import ru.netology.delivery.data.RegistrationInfo;
 
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.visible;
@@ -21,16 +19,10 @@ import static org.openqa.selenium.Keys.*;
 
 public class CardDeliveryTest {
 
-    public String generateDate(int days) {
-
-        return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-
-    }
-
     @Test
     void shouldSendForm() {
 
-        String planningDate = generateDate(9);
+        String planningDate = DataGenerator.generateDate(10);
 
         Configuration.browserSize = "800x600";
         Configuration.headless = true;
@@ -55,8 +47,8 @@ public class CardDeliveryTest {
     @Test
     void shouldSendFormRescheduling() {
 
-        String planningDate = generateDate(5);
-        String planingDateSecond = generateDate(10);
+        String planningDate = DataGenerator.generateDate(5);
+        String planingDateSecond = DataGenerator.generateDate(10);
 
         Configuration.browserSize = "800x600";
         Configuration.headless = true;
