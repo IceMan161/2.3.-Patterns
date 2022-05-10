@@ -3,6 +3,11 @@ package ru.netology.delivery.test;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 import ru.netology.delivery.data.DataGenerator;
@@ -19,18 +24,30 @@ import static org.openqa.selenium.Keys.*;
 
 public class CardDeliveryTest {
 
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
+    }
+
+    @BeforeEach
+    void setup() {
+        Configuration.headless = true;
+        open("http://localhost:9999");
+    }
+
     @Test
     void shouldSendForm() {
 
         String planningDate = DataGenerator.generateDate(10);
 
-        Configuration.browserSize = "800x600";
-        Configuration.headless = true;
-
         RegistrationInfo info = DataGenerator
                 .Registration.generateInfo("ru");
 
-        open("http://localhost:9999");
         $x("//input[@type='text']").val(info.getCity());
         $("[data-test-id='date'] input").sendKeys(Keys.chord(SHIFT, HOME), BACK_SPACE);
         $("[data-test-id='date'] input").setValue(planningDate);
@@ -50,13 +67,9 @@ public class CardDeliveryTest {
         String planningDate = DataGenerator.generateDate(5);
         String planingDateSecond = DataGenerator.generateDate(10);
 
-        Configuration.browserSize = "800x600";
-        Configuration.headless = true;
-
         RegistrationInfo info = DataGenerator
                 .Registration.generateInfo("ru");
 
-        open("http://localhost:9999");
         $x("//input[@type='text']").val(info.getCity());
         $("[data-test-id='date'] input").sendKeys(Keys.chord(SHIFT, HOME), BACK_SPACE);
         $("[data-test-id='date'] input").setValue(planningDate);
